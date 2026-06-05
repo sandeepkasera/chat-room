@@ -7,8 +7,12 @@
     <link rel="stylesheet" href="/style.css" />
   </head>
   <body data-username="<%= username %>" data-room="<%= room %>">
+    <nav class="site-nav">
+      <a class="logo" href="/">Chat Room</a>
+      <span class="room-name">Room: <%= room %></span>
+    </nav>
     <header class="chat-header">
-      <h2>Room: <%= room %></h2>
+      <div class="room-title">Room: <%= room %></div>
       <div class="user">You: <strong><%= username %></strong></div>
     </header>
 
