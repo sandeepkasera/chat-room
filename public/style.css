@@ -1,0 +1,16 @@
+:root{--bg:#f4f6f8;--card:#fff;--accent:#2b6cb0}
+*{box-sizing:border-box}
+body{font-family:system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif;margin:0;background:var(--bg);color:#111}
+.center{max-width:380px;margin:8vh auto;padding:24px;background:var(--card);border-radius:8px;box-shadow:0 6px 18px rgba(17,24,39,0.06);text-align:center}
+.join-form{display:flex;flex-direction:column;gap:12px}
+.join-form input{padding:10px;border:1px solid #d1d5db;border-radius:6px}
+.join-form button{padding:10px;border:0;border-radius:6px;background:var(--accent);color:#fff;font-weight:600}
+.chat-header{display:flex;justify-content:space-between;align-items:center;padding:12px 16px;background:var(--card);border-bottom:1px solid #e5e7eb}
+.chat-main{height:60vh;padding:16px;overflow:auto}
+.messages{display:flex;flex-direction:column;gap:8px}
+.message{background:#fff;padding:10px;border-radius:8px;box-shadow:0 1px 2px rgba(0,0,0,0.03)}
+.message .meta{font-size:12px;color:#374151;margin-bottom:6px}
+.message .text{font-size:14px;color:#111}
+.message-form{display:flex;gap:8px;padding:12px;border-top:1px solid #e5e7eb;background:var(--card)}
+.message-form input{flex:1;padding:10px;border:1px solid #d1d5db;border-radius:6px}
+.message-form button{padding:10px;border:0;border-radius:6px;background:var(--accent);color:#fff}

@@ -1,0 +1,25 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Join Chat</title>
+    <link rel="stylesheet" href="/style.css" />
+  </head>
+  <body>
+    <main class="center">
+      <h1>Join Chat</h1>
+      <form action="/chat" method="get" class="join-form">
+        <label>
+          Name
+          <input name="username" required maxlength="32" />
+        </label>
+        <label>
+          Room
+          <input name="room" required maxlength="32" value="general" />
+        </label>
+        <button type="submit">Join</button>
+      </form>
+    </main>
+  </body>
+</html>
