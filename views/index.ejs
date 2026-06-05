@@ -2,27 +2,52 @@
 <html>
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
     <title>Join Chat</title>
+    <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="/style.css" />
   </head>
-  <body>
-    <nav class="site-nav">
-      <a class="logo" href="/">Chat Room</a>
+  <body class="min-h-screen bg-slate-50 text-slate-900">
+    <nav class="sticky top-0 z-20 bg-white border-b border-slate-200 px-4 py-4 shadow-sm">
+      <div class="mx-auto flex max-w-3xl items-center justify-between">
+        <a class="text-lg font-semibold text-sky-600" href="/">Chat Room</a>
+      </div>
     </nav>
-    <main class="center">
-      <h1>Join Chat</h1>
-      <form action="/chat" method="get" class="join-form">
-        <label>
-          Name
-          <input name="username" required maxlength="32" />
-        </label>
-        <label>
-          Room
-          <input name="room" required maxlength="32" value="general" />
-        </label>
-        <button type="submit">Join</button>
-      </form>
+
+    <main class="mx-auto flex w-full max-w-md flex-1 flex-col justify-center px-4 py-8">
+      <section class="rounded-3xl bg-white p-6 shadow-xl shadow-slate-200/80">
+        <h1 class="mb-6 text-center text-3xl font-semibold text-slate-900">Join Chat</h1>
+
+        <form action="/chat" method="get" class="space-y-5">
+          <label class="block text-sm font-medium text-slate-700">
+            Name
+            <input
+              name="username"
+              required
+              maxlength="32"
+              class="mt-2 w-full rounded-2xl border border-slate-300 bg-slate-50 px-4 py-3 text-base text-slate-900 outline-none transition focus:border-sky-500 focus:ring-2 focus:ring-sky-100"
+            />
+          </label>
+
+          <label class="block text-sm font-medium text-slate-700">
+            Room ID
+            <input
+              name="room"
+              required
+              maxlength="32"
+              value="general"
+              class="mt-2 w-full rounded-2xl border border-slate-300 bg-slate-50 px-4 py-3 text-base text-slate-900 outline-none transition focus:border-sky-500 focus:ring-2 focus:ring-sky-100"
+            />
+          </label>
+
+          <button
+            type="submit"
+            class="w-full rounded-2xl bg-sky-600 px-4 py-3 text-base font-semibold text-white shadow-lg shadow-sky-600/20 transition hover:bg-sky-700"
+          >
+            Join Room
+          </button>
+        </form>
+      </section>
     </main>
   </body>
 </html>

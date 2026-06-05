@@ -7,6 +7,13 @@ document.addEventListener('DOMContentLoaded', () => {
   const form = document.getElementById('message-form');
   const input = document.getElementById('message-input');
 
+  function setVh() {
+    document.documentElement.style.setProperty('--vh', `${window.innerHeight * 0.01}px`);
+  }
+
+  setVh();
+  window.addEventListener('resize', setVh);
+
   socket.emit('join', { username, room });
 
   socket.on('roomFull', ({ room }) => {
@@ -14,12 +21,16 @@ document.addEventListener('DOMContentLoaded', () => {
     window.location.href = '/';
   });
 
+  function scrollBottom() {
+    messagesEl.scrollTop = messagesEl.scrollHeight;
+  }
+
   function appendMessage(msg) {
     const div = document.createElement('div');
     div.className = 'message';
     div.innerHTML = `<div class="meta"><strong>${escapeHtml(msg.username)}</strong> <span>${msg.time}</span></div><div class="text">${escapeHtml(msg.text)}</div>`;
     messagesEl.appendChild(div);
-    messagesEl.scrollTop = messagesEl.scrollHeight;
+    scrollBottom();
   }
 
   socket.on('message', (msg) => {
@@ -33,6 +44,16 @@ document.addEventListener('DOMContentLoaded', () => {
     socket.emit('chatMessage', text);
     input.value = '';
     input.focus();
+  });
+
+  input.addEventListener('focus', () => {
+    setTimeout(scrollBottom, 150);
+  });
+
+  window.addEventListener('resize', () => {
+    if (document.activeElement === input) {
+      setTimeout(scrollBottom, 150);
+    }
   });
 
   function escapeHtml(str) {
