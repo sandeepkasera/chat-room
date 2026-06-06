@@ -1,4 +1,4 @@
-# My Chat (SSR + Socket.IO)
+# My Chat Space (SSR + Socket.IO)
 
 Simple server-side rendered chat application using Express and Socket.IO. The server renders the join page and chat page; real-time messages are handled over WebSockets so you only need to deploy the backend to host the whole app.
 
