@@ -17,7 +17,7 @@ document.addEventListener('DOMContentLoaded', () => {
   socket.emit('join', { username, room });
 
   socket.on('roomFull', ({ room }) => {
-    alert(`Room "${room}" is full (2 participants). Please choose another room.`);
+    alert(`Room "${room}" is full. Please choose another room.`);
     window.location.href = '/';
   });
 
