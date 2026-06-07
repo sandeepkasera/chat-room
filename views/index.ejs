@@ -39,7 +39,8 @@
               name="room"
               required
               maxlength="32"
-              value="general"
+              value=""
+              placeholder="Enter room id for one-to-one"
               class="mt-2 w-full rounded-2xl border border-slate-300 bg-slate-50 px-4 py-3 text-base text-slate-900 outline-none transition focus:border-sky-500 focus:ring-2 focus:ring-sky-100"
             />
           </label>
@@ -57,13 +58,29 @@
           >
             Join Global Room
           </button>
+          <button
+            id="join-random"
+            type="button"
+            class="w-full rounded-2xl border border-slate-200 bg-white px-4 py-3 text-base font-semibold text-slate-900 transition hover:bg-slate-50"
+          >
+            Join Random Chat
+          </button>
+          <div id="random-loader" class="hidden mt-3 flex items-center justify-center">
+            <svg class="animate-spin h-6 w-6 text-sky-600" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+              <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+              <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v4a4 4 0 00-4 4H4z"></path>
+            </svg>
+          </div>
         </form>
       </section>
     </main>
+    <script src="/socket.io/socket.io.js"></script>
     <script>
       (function () {
         const form = document.getElementById('join-form');
         const joinGlobal = document.getElementById('join-global');
+        const joinRandom = document.getElementById('join-random');
+        let indexSocket;
         joinGlobal.addEventListener('click', () => {
           const username = form.querySelector('input[name="username"]').value.trim();
           if (!username) {
@@ -73,6 +90,81 @@
           const params = new URLSearchParams({ username, room: 'global' });
           window.location.href = '/chat?' + params.toString();
         });
+
+        // Random join handler using a temporary socket connection
+        let waitingTimer = null;
+        let isWaiting = false;
+        joinRandom.addEventListener('click', () => {
+          const username = form.querySelector('input[name="username"]').value.trim();
+          if (!username) {
+            form.querySelector('input[name="username"]').focus();
+            return alert('Please enter your name before joining the random chat.');
+          }
+
+          // If already waiting, treat click as cancel
+          if (isWaiting) {
+            if (indexSocket) {
+              indexSocket.emit('cancelRandom');
+            }
+            clearWaitingState();
+            return;
+          }
+
+          // Ensure room id is not filled for random
+          const roomInput = form.querySelector('input[name="room"]');
+          roomInput.value = '';
+
+          // Open temporary socket if not already
+          if (!indexSocket) {
+            indexSocket = io();
+
+            indexSocket.on('waiting', () => {
+              console.log('[random] waiting');
+              isWaiting = true;
+              joinRandom.textContent = 'Waiting... (click to cancel)';
+              // show loader
+              document.getElementById('random-loader').classList.remove('hidden');
+
+              // start 60s timeout
+              waitingTimer = setTimeout(() => {
+                // cancel on client side and inform server
+                if (indexSocket) indexSocket.emit('cancelRandom');
+                clearWaitingState();
+                alert('No active users right now — please try again later.');
+                window.location.href = '/';
+              }, 60 * 1000);
+            });
+
+            indexSocket.on('matched', ({ room }) => {
+              console.log('[random] matched ->', room);
+              // clear waiting state and navigate to the matched room
+              clearWaitingState();
+              const params = new URLSearchParams({ username, room });
+              window.location.href = '/chat?' + params.toString();
+            });
+
+            indexSocket.on('noActive', () => {
+              console.log('[random] noActive');
+              clearWaitingState();
+              alert('No active users right now — please try again later.');
+              window.location.href = '/';
+            });
+          }
+
+          // emit join request
+          indexSocket.emit('randomJoin', { username });
+        });
+
+        function clearWaitingState() {
+          isWaiting = false;
+          if (waitingTimer) {
+            clearTimeout(waitingTimer);
+            waitingTimer = null;
+          }
+          joinRandom.textContent = 'Join Random Chat';
+          joinRandom.disabled = false;
+          joinRandom.classList.remove('opacity-80');
+        }
       })();
     </script>
   </body>
