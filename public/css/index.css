@@ -1,0 +1,9 @@
+/* styles specific to the join/index page */
+.main-form-container{max-width:28rem;margin:0 auto}
+.join-form .border{border:1px solid #e2e8f0}
+.join-form button[type="button"]{background:#fff}
+#random-loader{align-items:center;justify-content:center}
+
+/* tighten button spacing on small screens */
+button{cursor:pointer}
+
