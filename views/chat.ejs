@@ -25,7 +25,11 @@
           <p class="text-sm uppercase tracking-[0.2em] text-slate-400">Connected as</p>
           <p class="text-lg font-semibold text-slate-900"><%= username %></p>
         </div>
-        <div class="rounded-2xl bg-slate-100 px-4 py-2 text-sm text-slate-700">Room: <%= room %></div>
+        <div class="flex items-center gap-3">
+          <div class="rounded-2xl bg-slate-100 px-4 py-2 text-sm text-slate-700">Room: <%= room %></div>
+          <button id="end-chat" class="rounded-2xl bg-red-600 px-3 py-2 text-sm font-semibold text-white hover:bg-red-700">End Chat</button>
+          <button id="find-random" class="hidden rounded-2xl bg-sky-600 px-3 py-2 text-sm font-semibold text-white hover:bg-sky-700">Find New Random</button>
+        </div>
       </header>
 
       <main class="chat-main flex-1 overflow-y-auto rounded-3xl bg-white p-4 shadow-sm">
