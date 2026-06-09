@@ -7,3 +7,12 @@
 /* tighten button spacing on small screens */
 button{cursor:pointer}
 
+/* About Us: ensure horizontal spacing on small screens so text isn't clipped */
+@media (max-width: 640px) {
+	footer .mx-auto {
+		padding-left: 1rem;
+		padding-right: 1rem;
+	}
+	footer p { overflow-wrap: break-word; }
+}
+
